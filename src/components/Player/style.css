@@ -1,0 +1,23 @@
+.song-figure {
+    margin: 0;
+    line-height: 0;
+}
+
+.audiobutton {
+    background-color: #fff;
+    background-image: url(../../images/icons/icon-play.png);
+    background-size: 10px;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 0;
+    text-indent: -9999px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all ease .1s;
+}
+
+.audiobutton--pause {
+    background-image: url(../../images/icons/icon-pause.png);
+}

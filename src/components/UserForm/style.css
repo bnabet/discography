@@ -1,0 +1,26 @@
+.form-title {
+    text-align: left;
+    margin-bottom: 10px;
+    font-size: 22px;
+}
+
+.form-separator-1 hr {
+    overflow: visible;
+    margin: 0 0 20px;
+    border: 0;
+    border-top: 1px solid rgba(0,0,0,.1);
+    position: relative;
+}
+
+.form-separator-1:after {
+    content: "Ou";
+    display: inline-block;
+    line-height: 1;
+    position: relative;
+    top: -13px;
+    z-index: 2;
+    background: #fff;
+    padding: 0 14px;
+    font-weight: 500;
+    color: #aaa;
+}

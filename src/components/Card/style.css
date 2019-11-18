@@ -1,0 +1,220 @@
+.songs-item {
+    display: flex;
+    padding: 14px 0;
+    position: relative;
+    align-items: center;
+}
+
+.songs-item:not(:last-child):after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: #f2f2f2;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.song-cover {
+    background: linear-gradient(33deg, rgba(129, 193, 173, 0.65) 0%, rgba(127, 187, 204, 0.75) 30%, rgb(80, 142, 192) 100%);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 2px;
+    height: 50px;
+    position: relative;
+    width: 50px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.song-infos {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+.song-top {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+}
+
+.song-player-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 8px;
+}
+
+.song-title {
+    color: var(--txt-color-main);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 22px;
+}
+
+.song-artist {
+    color: #d0d0d0;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.song-progress {
+    background-size: contain;
+    background-position: 0 0;
+    background-repeat: repeat-x;
+    height: 6px;
+    background-color: #f2f2f2;
+    border-radius: 6px;
+    overflow: hidden;
+    transition: width .5s ease;
+}
+
+.song-progress-bar {
+    background-color: #508ec0;
+    height: 6px;
+    transition: width .5s ease;
+}
+
+.song-labels {
+    display: flex;
+    justify-content: center;
+}
+
+.labels-item {
+    margin-right: 6px;
+}
+
+.song-tools {
+    display: flex;
+    justify-content: center;
+}
+
+.song-admin {
+    display: flex;
+}
+
+.tools-button {
+    background-size: 18px;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    border-radius: 2px;
+    text-align: right;
+    transition: all ease .1s;
+    font-size: 11px;
+    font-weight: 500;
+    color: #6d6d6d;
+    text-indent: -9999px;
+    width: 30px;
+    height: 30px;
+    margin: 0 4px;
+}
+
+.tools-delete {
+    background-image: url(../../images/icons/icon-trash.png);
+}
+
+.tools-delete:hover {
+    background-image: url(../../images/icons/icon-trash-red.png);
+    /* background-color: var(--red); */
+}
+
+.tools-edit {
+    background-image: url(../../images/icons/icon-edit.png);
+}
+
+.tools-edit:hover {
+    background-image: url(../../images/icons/icon-edit-blue.png);
+}
+
+.tools-star {
+    background-image: url(../../images/icons/icon-heart.png);
+    margin: 0;
+}
+
+.tools-star--active {
+    background-image: url(../../images/icons/icon-heart-blue.png);
+}
+
+.song-details {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.song-details-item {
+    position: relative;
+}
+
+.song-speed {
+    width: 80px;
+}
+
+.song-note {
+    width: 80px;
+    text-transform: uppercase;
+}
+
+.song-range {
+    text-transform: uppercase;
+}
+
+/* Modal */
+.song-modal {
+    background-color: rgba(53, 67, 78, 0.68);
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 35px;
+    justify-content: center;
+    color: var(--txt-color-main);
+    font-size: 14px;
+    align-items: center;
+    font-weight: 500;
+    z-index: 5;
+}
+
+.modal-inner {
+    background-color: #fff;
+    border-radius: 2px;
+    padding: 30px;
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,.2);
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 14px;
+    width: 100%;
+}
+
+.songs-item .modal-btn {
+    padding: 8px 32px;
+    font-size: 15px;
+    margin-left: 20px;
+}
+
+.modal-icon {
+    background-color: #a7803a;
+    border-color: #a7803a;
+    margin: 0 0 20px 0;
+    background-size: 13px;
+    padding: 20px;
+    background-image: url(../../images/icons/icon-star-x2.png);
+    background-size: 18px;
+}
+
+.song-index {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--txt-color-main);
+}

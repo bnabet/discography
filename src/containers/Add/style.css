@@ -1,0 +1,124 @@
+.editor {
+    display: flex;
+    max-width: 600px;
+}
+
+.editor-content {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    padding-top: 30px;
+    flex: 1 1 auto;
+    margin-right: 40px;
+    justify-content: center;
+    border-top: 1px solid #dedede;
+}
+
+.editor-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.editor-subGroup {
+    display: flex;
+    flex-direction: column;
+    margin-right: 30px;
+}
+
+.editor-content .form-label {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0 5px 4px 0;
+}
+
+.editor-input {
+    border: 1px solid rgba(0,0,0,.1);
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+    color: var(--txt-color-second);
+    margin-bottom: 20px;
+    padding: 12px 18px;
+    border-radius: 2px;
+}
+
+.editor-input[name="bpm"] {
+    width: 130px;
+    margin-right: 20px;
+}
+
+.editor-input[name="range"] {
+    width: 130px;
+    text-transform: uppercase;
+}
+
+.editor-input[name="range"]::placeholder {
+    text-transform: capitalize;
+}
+
+input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+/* Selected file */
+.editor-selectedFile {
+    margin: 30px 0 0;
+    font-size: 14px;
+    background-color: #eaf0f7;
+    padding: 12px 33px;
+    border-radius: 2px;
+}
+
+/* Buttons section */
+.editor-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.editor-submit {
+    width: 50%;
+    margin: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.editor-preview {
+    margin: 0;
+}
+
+.fileContainer {
+    overflow: hidden;
+    position: relative;
+}
+
+.editor-label {
+    width: 50%;
+    margin-right: 30px;
+}

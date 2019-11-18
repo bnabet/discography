@@ -1,0 +1,37 @@
+.page {
+    background-color: #f9f9f9;
+    display: flex;
+    flex: 1 1 auto;
+    width: 100%;
+    max-width: 1920px;
+    margin: 0 auto;
+    padding-top: 60px;
+}
+
+.page.noUser {
+    background-color: var(--bg-color-second);
+    justify-content: center;
+    align-items: center;
+}
+
+
+/***** CONTENT *****/
+.page-area {
+    /* display: flex; */
+    flex: 1 1 auto;
+    position: relative;
+}
+
+.page.noUser .page-area {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.page-content {
+    background-color: #fff;
+    margin: 30px 30px;
+    box-shadow: 0 1px 6px 0 rgba(0,0,0,.15);
+    padding: 30px;
+    flex: 1 1 auto;
+}

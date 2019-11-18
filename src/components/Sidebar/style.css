@@ -1,0 +1,99 @@
+.sidebar {
+    border-right: 1px solid #ececec;
+    width: 220px;
+    flex-shrink: 0;
+}
+
+.sidebar-logo {
+    /* background-image: url(../../images/logo-black.png); */
+    background-image: url(../../images/icons/icon-home-white.png);
+    background-size: 24px;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    height: 24px;
+    text-decoration: none;
+    color: inherit;
+    line-height: 15px;
+    width: 24px;
+    font-size: 11px;
+    flex-direction: column;
+    justify-content: center;
+    text-indent: -9999px;
+}
+
+.sidebar-group:first-of-type {
+    padding-top: 30px;
+}
+
+.sidebar-logo b {
+    font-size: 12px;
+}
+
+.sidebar-title {
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 13px;
+    padding-left: 28px;
+    opacity: .4;
+}
+
+.sidebar-list {
+    list-style-type: none;
+    margin-bottom: 30px;
+    padding: 0;
+}
+
+.sidebar-link {
+    background-position: 24px center;
+    background-repeat: no-repeat;
+    background-size: 18px;
+    color: inherit;
+    cursor: pointer;
+    display: block;
+    font-size: 14px;
+    line-height: 26px;
+    padding: 10px 0 10px 58px;
+    text-decoration: none;
+}
+
+.sidebar-link:hover {
+    color: var(--bg-color-main);
+}
+
+.sidebar-link.active {
+    color: var(--bg-color-main);
+    background-color: #ddebf7;
+}
+
+.sidebar-link--home {
+    background-image: url(../../images/icons/icon-home.png);
+}
+
+.sidebar-link--question {
+    background-image: url(../../images/icons/icon-question-2.png);
+}
+
+.sidebar-link--lock {
+    background-image: url(../../images/icons/icon-lock.png);
+}
+
+.sidebar-link--default {
+    background-image: url(../../images/icons/icon-wave-2.png);
+}
+
+.sidebar-link--default:hover, .sidebar-link--default.active {
+    background-image: url(../../images/icons/icon-wave-blue.png);
+}
+
+.sidebar-link--home:hover, .sidebar-link--home.active {
+    background-image: url(../../images/icons/icon-home-blue.png);
+}
+
+.sidebar-link--question:hover, .sidebar-link--question.active {
+    background-image: url(../../images/icons/icon-question-2-blue.png);
+}
+
+.sidebar-link--lock:hover, .sidebar-link--lock.active {
+    background-image: url(../../images/icons/icon-lock-blue.png);
+}

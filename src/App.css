@@ -1,0 +1,91 @@
+html, body {
+    height: 100%;
+}
+
+html * {
+    box-sizing: border-box;
+}
+
+html *:focus {
+    outline: 0;
+}
+
+::placeholder {
+    color: var(--txt-color-main);
+    opacity: .3;
+}
+
+body {
+    color: var(--txt-color-main);
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;;
+    line-height: 1.8;
+    margin: 0;
+    background-color: #f9f8f8;
+}
+
+#root {
+    display: flex;
+    height: 100%;
+}
+
+/***** Theme *****/
+
+:root {
+    --txt-color-main: #464646;
+    --txt-color-second: #6d6d6d;
+    --bg-color-main: #508ec0;
+    --bg-color-main-hov: #4a82af;
+    --bg-color-second: #f9f9f9;
+    --bg-color-second-hov: #efefef;
+    --red: #e45d5d;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+}
+
+
+/***** ELEMENTS *****/
+.btn {
+    border-radius: 2px;
+    border: 1px solid;
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: normal;
+    padding: 12px 40px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.btn:disabled {
+    background-color: #D8E2EA;
+    border-color: #D8E2EA;
+    color: #73809A;
+    cursor: default;
+}
+
+.btn-default {
+    background-color: var(--bg-color-main);
+    border-color: var(--bg-color-main);
+    color: #fff;
+}
+
+.btn-default:not([disabled]):hover {
+    background-color: var(--bg-color-main-hov);
+}
+
+.btn--icon {
+    padding: 12px 40px 15px 18px;
+    text-align: left;
+    position: relative;
+}
+
+.App {
+    display: flex;
+    width: 100%;
+}

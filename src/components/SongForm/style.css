@@ -1,0 +1,20 @@
+.editor-progress {
+    background: #f1f1f1;
+    margin-top: 40px;
+    border-radius: 2px;
+    border: 2px solid #e6e6e6;
+}
+
+
+.progress-bar {
+    height: 40px;
+    position: relative;
+    transition: width .4s ease;
+}
+
+.progress-bar:before {
+    content: "";
+    display: block;
+    background-color: #b0ceb0;
+    height: 100%;
+}

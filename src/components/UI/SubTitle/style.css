@@ -1,0 +1,12 @@
+.page-title {
+    margin-bottom: 20px;
+}
+
+.title-label {
+    font-size: 20px;
+    font-family: 'Fjalla One', sans-serif;
+    border-bottom: 3px solid var(--bg-color-main);
+    display: inline-block;
+    line-height: 1.6;
+    font-weight: normal;
+}
