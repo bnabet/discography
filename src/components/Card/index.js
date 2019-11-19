@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
+import firebase from 'firebase';
 import { songsRef } from '../../firebase';
 import { AuthContext } from '../AuthContext';
 import Player from '../Player';
 import SongModal from '../SongModal';
 import { ACTIONS, MODAL } from '../../config';
+
 import './style.css';
 
 const classNames = require('classnames');
@@ -49,15 +51,11 @@ class Card extends Component {
 
         setTimeout(() => {
             this.closeModal();
-        }, 1000)
+        }, 1000);
     }
 
     closeModal = () => {
-        this.setState({
-            modal: {
-                show: false
-            }
-        });
+        this.setState({ modal: {show: false} });
     }
 
     editSongHandler = song => {
@@ -67,23 +65,30 @@ class Card extends Component {
         });
     }
 
-    deleteSong = async (songId) => {
-        await songsRef
-            .doc(songId)
+    deleteSong = song => {
+        var storageRef = firebase.storage().ref();
+        var fileRef = storageRef.child('songs/' + song.file);
+
+        songsRef
+            .doc(song.id)
             .delete()
             .then(() => {
-                console.log("Document successfully deleted!");
+                fileRef.delete();
+                this.props.removeFromBoard(song);
+
+                // Waiting redux store ...
+                this.props.updateList(this.context.user.id);
+
+                this.setState({ modal: {show: false} });
             }).catch(error => {
                 console.error("Error removing document: ", error);
             })
     }
 
     getTime = time => {
-        console.log(time, '%')
-        // var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         this.setState({
             playerTime: time
-        })
+        });
     }
 
     componentDidMount() {
@@ -142,7 +147,7 @@ class Card extends Component {
                                     modal={this.state.modal}
                                     deleteSong={this.deleteSong}
                                     closeModal={this.closeModal}
-                                    songId={this.props.song.id}
+                                    song={this.props.song}
                                 />
                             }
                         </div>

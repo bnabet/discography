@@ -40,6 +40,11 @@ const List = props => {
             })
     }
 
+    // Waiting redux store ...
+    const updateList = userId => {
+        props.getSongs(userId);
+    }
+
     let prevSongId = null;
 
     let sortedSongs = props.songs.sort((a, b) => {
@@ -73,6 +78,7 @@ const List = props => {
                                 song={song}
                                 addToBoard={addToBoard}
                                 removeFromBoard={removeFromBoard}
+                                updateList={updateList}
                             />
                         );
                     }

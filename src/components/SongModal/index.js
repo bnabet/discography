@@ -4,7 +4,7 @@ import { MODAL, BUTTONS } from '../../config';
 
 class SongModal extends Component {
     render() {
-        const { modal, songId, deleteSong, closeModal } = this.props;
+        const { modal, song, deleteSong, closeModal } = this.props;
         
         return (
             <div className="song-modal">
@@ -17,7 +17,7 @@ class SongModal extends Component {
 
                     {modal.mode === MODAL.mode.confirm &&
                         <div className="modal-actions">
-                            <div className="modal-btn btn btn-default" onClick={() => deleteSong(songId)}>
+                            <div className="modal-btn btn btn-default" onClick={() => deleteSong(song)}>
                                 {BUTTONS.confirmLabel}
                             </div>
                             <div className="modal-btn btn btn-default" onClick={closeModal}>
