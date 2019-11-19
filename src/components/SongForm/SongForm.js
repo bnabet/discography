@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import firebase from 'firebase';
 import { songsRef } from '../../firebase';
-import Aux from '../../hoc/Aux';
 import * as actionTypes from '../../store/actions';
+import Aux from '../../hoc/Aux';
+import Input from '../UI/Input';
 
 import './style.css';
 
@@ -13,40 +13,94 @@ class SongForm extends Component {
     state = {
         editMode: false,
         selectedFile: undefined,
-        title: '',
-        speed: '',
-        range: '',
-        categories: [],
+        progress: 0,
         url: '',
-        progress: 0
+        form: {
+            title: {
+                label: 'Titre',
+                elementType: 'input',
+                attributes: {
+                    type: 'text',
+                    placeholder: 'Titre',
+                    className: 'editor-input'
+                },
+                value: '',
+                validation: {
+                    required: true
+                }
+            },
+            speed: {
+                label: 'Vitesse',
+                elementType: 'input',
+                attributes: {
+                    type: 'number',
+                    placeholder: 'BPM',
+                    className: 'editor-input',
+                    maxLength: 3
+                },
+                value: '',
+                validation: {
+                    required: true,
+                    minLength: 1,
+                    maxLength: 3
+                }
+            },
+            range: {
+                label: 'Gamme',
+                elementType: 'input',
+                attributes: {
+                    type: 'text',
+                    placeholder: 'C#',
+                    className: 'editor-input',
+                    maxLength: 2
+                },
+                value: '',
+                validation: {
+                    required: true,
+                    minLength: 1,
+                    maxLength: 2,
+                    pattern: "^(c|c#|d|d#|e|f|f#|g|g#|a|a#|b|C|C#|D|D#|E|F|F#|G|G#|A|A#|B).*$"
+                }
+            },
+            categories: {
+                label: 'Catégories',
+                elementType: 'input',
+                attributes: {
+                    type: 'checkbox',
+                    options: [
+                        { value: 'trap', displayValue: 'Trap', checked: false },
+                        { value: 'old school', displayValue: 'Old school', checked: false },
+                        { value: 'others', displayValue: 'Others', checked: false }
+                    ]
+                },
+                value: [],
+                validation: {}
+            }
+        }
 	};
 
-    onChange = event => {
-        const target = event.target;
-        const categories = this.state.categories;
-        const check = event.target.checked;
-        const value = target.value;
-        const name = target.name;
-
-        if (name === 'categories') {
-            if (check) {
-                this.setState({
-                    categories: [...this.state.categories, value]
-                });
-            } else {
-                var index = categories.indexOf(value);
-                if (index > -1) {
-                    categories.splice(index, 1);
-                    this.setState({
-                        categories: categories
-                    });
+    onChange = (event, input) => {
+        const updatedForm = {
+            ...this.state.form
+        };
+        const updatedFormElement = {
+            ...updatedForm[input.id]
+        };
+        if (input.id === 'categories') {
+            updatedFormElement.attributes.options.map(option => {
+                if (event.target.value === option.value) {
+                    option.checked = !option.checked;
                 }
-            }
+                return option;
+            })
         } else {
-            this.setState({
-                [name]: name === 'speed' ? parseFloat(target.value) : value
-            });
+            updatedFormElement.value = (input.id === 'speed')
+                ? parseFloat(event.target.value)
+                : event.target.value;
         }
+        updatedForm[input.id] = updatedFormElement;
+
+        this.setState({ form: updatedForm });
     }
 
     submitForm = event => {
@@ -66,7 +120,7 @@ class SongForm extends Component {
                 });
 
                 if (progress === 100) {
-                    this.props.fileHandler(true);
+                    this.props.handleForm(true);
                 }
 
                 switch (snapshot.state) {
@@ -75,6 +129,8 @@ class SongForm extends Component {
                         break;
                     case firebase.storage.TaskState.RUNNING:
                         console.log('Upload is running');
+                        break;
+                    default:
                         break;
                 }
             }, error => {
@@ -93,12 +149,17 @@ class SongForm extends Component {
     }
 
     addSong = url => {
+        const selectedCategories = this.state.form.categories.attributes.options
+            .filter(option => option.checked);
+
+        const newCategories = selectedCategories.map(category => category.value);
+
         songsRef
             .add({
-                title: this.state.title,
-                speed: this.state.speed,
-                range: this.state.range,
-                categories: this.state.categories,
+                title: this.state.form.title.value,
+                speed: this.state.form.speed.value,
+                range: this.state.form.range.value,
+                categories: newCategories,
                 createdAt: new Date(),
                 url: url,
                 file: this.state.selectedFile.name
@@ -109,17 +170,22 @@ class SongForm extends Component {
 	}
 
     editSong = url => {
+        const selectedCategories = this.state.form.categories.attributes.options
+            .filter(option => option.checked);
+
+        const newCategories = selectedCategories.map(category => category.value);
+
         songsRef
             .doc(this.state.id)
             .update({
-                title: this.state.title,
-                speed: this.state.speed,
-                range: this.state.range,
-                categories: this.state.categories,
+                title: this.state.form.title.value,
+                speed: this.state.form.speed.value,
+                range: this.state.form.range.value,
+                categories: newCategories,
                 url: url
             })
             .then(() => (
-                <Redirect to='/beats' />
+                this.props.handleForm(true)
             ))
     }
 
@@ -129,6 +195,32 @@ class SongForm extends Component {
         });
     }
 
+    renderFormElements = () => {
+        const formElements = [];
+        for (let key in this.state.form) {
+            formElements.push({
+                id: key,
+                config: this.state.form[key]
+            });
+        }
+
+        return (
+            formElements.map(formElement => {
+                return (
+                    <Input
+                        key={formElement.id}
+                        elementType={formElement.config.elementType}
+                        label={formElement.config.label}
+                        attributes={formElement.config.attributes}
+                        value={formElement.config.value}
+                        onChange={event => this.onChange(event, formElement)}
+                        required
+                    />
+                )
+            })
+        );
+    }
+
     componentDidMount() {
         if (this.props.songToEdit !== undefined) {
             const songToEdit = this.props.songToEdit;
@@ -136,11 +228,25 @@ class SongForm extends Component {
             this.setState({
                 editMode: true,
                 id: songToEdit.id,
-                title: songToEdit.title,
-                speed: songToEdit.speed,
-                range: songToEdit.range,
-                categories: songToEdit.categories,
-                url: songToEdit.url
+                url: songToEdit.url,
+                form: {
+                    ...this.state.form,
+                    title: { ...this.state.form.title, value: songToEdit.title },
+                    speed: { ...this.state.form.speed, value: songToEdit.speed },
+                    range: { ...this.state.form.range, value: songToEdit.range },
+                    categories: {
+                        ...this.state.form.categories,
+                        attributes: {
+                            ...this.state.form.categories.attributes,
+                            options: this.state.form.categories.attributes.options.map(option => {
+                                return {
+                                    ...option,
+                                    checked: songToEdit.categories.indexOf(option.value) > -1
+                                }
+                            })
+                        }
+                    }
+                }
             });
         }
     }
@@ -152,92 +258,8 @@ class SongForm extends Component {
                     className="editor-content"
                     onSubmit={event => this.submitForm(event)}
                 >
-                    <label className="form-label">Titre</label>
-                    <input
-                        type="text"
-                        name="title"
-                        placeholder="Song title"
-                        className="editor-input"
-                        onChange={this.onChange}
-                        value={this.state.title}
-                        required
-                    />
-                    <div className="editor-group">
-                        <div className="editor-subGroup">
-                            <label className="form-label">Vitesse</label>
-                            <input
-                                type="number"
-                                name="speed"
-                                placeholder="BPM"
-                                className="editor-input"
-                                onChange={this.onChange}
-                                value={this.state.speed}
-                                required
-                            />
-                        </div>
-                        <div className="editor-subGroup">
-                            <label className="form-label">Gamme</label>
-                            <input
-                                pattern="^(c|c#|d|d#|e|f|f#|g|g#|a|a#|b|C|C#|D|D#|E|F|F#|G|G#|A|A#|B).*$"
-                                type="text"
-                                name="range"
-                                maxLength="2"
-                                placeholder="Gamme"
-                                className="editor-input"
-                                onChange={this.onChange}
-                                value={this.state.range}
-                                required
-                            />
-                        </div>
-                    </div>
-                    <div className="editor-group">
-                        <input
-                            type="checkbox"
-                            name="categories"
-                            value="Trap"
-                            onChange={this.onChange}
-                            checked={this.state.categories.indexOf('Trap') > -1}
-                        />
-                        <label className="form-label checkbox-label">Trap</label>
-                    </div>
-                    <div className="editor-group">
-                        <input
-                            type="checkbox"
-                            name="categories"
-                            value="Old school"
-                            onChange={this.onChange}
-                            checked={this.state.categories.indexOf('Old school') > -1}
-                        />
-                        <label className="form-label checkbox-label">Old school</label>
-                    </div>
-                    <div className="editor-group">
-                        <input
-                            type="checkbox"
-                            name="categories"
-                            value="Others"
-                            onChange={this.onChange}
-                            checked={this.state.categories.indexOf('Others') > -1}
-                        />
-                        <label className="form-label checkbox-label">Autres</label>
-                    </div>
-                    <div className="editor-group">
-                        <input type="checkbox"
-                            name="categories"
-                            value="Loops"
-                            onChange={this.onChange}
-                            checked={this.state.categories.indexOf('Loops') > -1}
-                        />
-                        <label className="form-label checkbox-label">Loops</label>
-                    </div>
-                    <div className="editor-group">
-                        <input type="checkbox"
-                            name="categories"
-                            value="Melodies"
-                            onChange={this.onChange}
-                            checked={this.state.categories.indexOf('Melodies') > -1}
-                        />
-                        <label className="form-label checkbox-label">Mélodies</label>
-                    </div>
+
+                    {this.renderFormElements()}
 
                     {this.state.selectedFile &&
                         <div className="editor-selectedFile">
@@ -253,7 +275,13 @@ class SongForm extends Component {
                             id="file"
                             onChange={this.selectFile}
                         />
-                        <button type="submit" className="editor-submit btn btn-default" disabled={(this.state.selectedFile === null) && !this.state.editMode}>{this.state.editMode ? 'Mettre à jour' : 'Ajouter'}</button>
+                        <button
+                            type="submit"
+                            className="editor-submit btn btn-default"
+                            disabled={(this.state.selectedFile === null) && !this.state.editMode}
+                        >
+                            {this.state.editMode ? 'Mettre à jour' : 'Ajouter'}
+                        </button>
                     </div>
 
                     {this.state.progress > 0 &&

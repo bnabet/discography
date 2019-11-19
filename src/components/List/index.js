@@ -3,6 +3,7 @@ import React from 'react';
 import firebase from 'firebase';
 import { usersRef } from '../../firebase';
 import Card from '../Card';
+
 import './style.css';
 
 const List = props => {
@@ -40,52 +41,50 @@ const List = props => {
             })
     }
 
+    const renderSongs = () => {
+        let sortedSongs = props.songs
+            .sort((a, b) => {
+                let temp;
+                switch (props.currentFilter) {
+                    case 'slow':
+                        temp = a.speed - b.speed;
+                        break;
+                    case 'fast':
+                        temp = b.speed - a.speed;
+                        break;
+                    default:
+                        temp = a.createdAt - b.createdAt;
+                }
+                return temp;
+            });
+
+        let filteredSongs = sortedSongs
+            .map((song, index) => {
+                let temp;
+                if ((song.categories.indexOf(props.currentTab) > -1)
+                    || (props.currentTab === 'all')
+                    || (props.currentTab === 'favoris' && song.favourite)) {
+                    temp = (
+                        <Card
+                            key={song.id}
+                            position={index + 1}
+                            song={song}
+                            addToBoard={addToBoard}
+                            removeFromBoard={removeFromBoard}
+                            updateList={updateList}
+                        />
+                    );
+                }
+                return temp;
+            });
+
+        return filteredSongs;
+    }
+
     // Waiting redux store ...
     const updateList = userId => {
         props.getSongs(userId);
     }
-
-    let prevSongId = null;
-
-    let sortedSongs = props.songs.sort((a, b) => {
-        let temp;
-        switch (props.currentFilter) {
-            case 'slow':
-                temp = a.speed - b.speed;
-                break;
-            case 'fast':
-                temp = b.speed - a.speed;
-                break;
-            default:
-                temp = a.createdAt - b.createdAt;
-        }
-        return temp;
-    })
-
-    let songsList = (
-        sortedSongs.map((song, index) => (
-            song.categories.map(category => {
-                if (song.id !== prevSongId) {
-                    prevSongId = song.id;
-                    if ((props.currentTab === category)
-                     || (props.currentTab === 'All')
-                     || (props.currentTab === 'Favoris' && song.favourite)
-                    ) {
-                        return (
-                            <Card
-                                key={song.id}
-                                position={index + 1}
-                                song={song}
-                                addToBoard={addToBoard}
-                                removeFromBoard={removeFromBoard}
-                                updateList={updateList}
-                            />
-                        );
-                    }
-                }
-            })
-        ))
-    );
 
     return (
         <ul className="section-songs">
@@ -101,7 +100,7 @@ const List = props => {
                     <li className="labels-admin column-admin">Admin</li>
                 </ul>
             </li>
-            {songsList}
+            {renderSongs()}
         </ul>
     )
 }

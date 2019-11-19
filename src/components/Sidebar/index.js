@@ -5,10 +5,11 @@ import { SIDEBAR } from '../../config';
 import './style.css';
 
 const Sidebar = props => {
-    const publicLinks = (
+    const renderLinks = () => (
         SIDEBAR.links.map(link => {
+            let temp;
             if (link.show) {
-                return (
+                temp = (
                     <li key={link.path}>
                         <NavLink
                             exact
@@ -21,6 +22,7 @@ const Sidebar = props => {
                     </li>
                 );
             }
+            return temp;
         })
     );
 
@@ -28,7 +30,7 @@ const Sidebar = props => {
         <div className="sidebar">
             <div className="sidebar-group">
                 <nav className="sidebar-list">
-                    {publicLinks}
+                    {renderLinks()}
                 </nav>
             </div>
             

@@ -1,46 +1,47 @@
 import React, { Component } from 'react';
-import { withRouter, NavLink } from "react-router-dom";
+import { withRouter, Redirect, NavLink } from "react-router-dom";
 
+import Aux from '../../hoc/Aux';
 import SongForm from '../../components/SongForm/SongForm';
 import SubTitle from '../../components/UI/SubTitle/SubTitle';
-import Aux from '../../hoc/Aux';
+
 import './style.css';
 
 class Add extends Component {
     state = {
-        fileUploaded: false
+        addedOrUpdated: false
 	};
 
-    fileHandler = isUploaded => {
-        this.setState({
-            fileUploaded: isUploaded
-        });
-    }
-
-    reset = () => {
-        this.setState({
-            fileUploaded: false
-        });
+    handleForm = value => {
+        this.setState({ addedOrUpdated: value });
     }
 
 	render() {
+        const { songToEdit } = this.props.location;
+
+        console.log(songToEdit)
+        
         let content = (
-            <Aux>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                <SongForm
-                    songToEdit={this.props.location.songToEdit}
-                    fileHandler={this.fileHandler}
-                />
-            </Aux>
+            <SongForm
+                songToEdit={songToEdit}
+                handleForm={this.handleForm}
+            />
         );
 
-        if (this.state.fileUploaded) {
+        if (this.state.addedOrUpdated) {
+            if (songToEdit) {
+                return <Redirect to='/beats' />;
+            }
+
             content = (
                 <Aux>
-                    <p>Song added !</p>
+                    <p>Son ajouté !</p>
                     <div>
-                        <NavLink className="btn-default" to="/beats">Go to beats page</NavLink>
-                        <div className="btn-default" onClick={this.reset}>Add another song</div>
+                        <NavLink className="btn btn-default" to="/beats">Voir les beats</NavLink>
+                        <div
+                            className="btn btn-default"
+                            onClick={() => this.setState({ addedOrUpdated: false })}
+                        >Ajouter un autre son</div>
                     </div>
                 </Aux>
             );
@@ -48,7 +49,9 @@ class Add extends Component {
 
 		return (
             <Aux>
-                <SubTitle>{this.props.location.songToEdit ? 'Éditer le son' : 'Ajouter un nouveau son'}</SubTitle>
+                <SubTitle>
+                    {songToEdit ? 'Éditer le son' : 'Ajouter un nouveau son'}
+                </SubTitle>
                 {content}
             </Aux>
         );

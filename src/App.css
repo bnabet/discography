@@ -75,6 +75,10 @@ h1, h2, h3, h4, h5, h6 {
     color: #fff;
 }
 
+.btn-default + .btn-default {
+    margin-left: 15px;
+}
+
 .btn-default:not([disabled]):hover {
     background-color: var(--bg-color-main-hov);
 }

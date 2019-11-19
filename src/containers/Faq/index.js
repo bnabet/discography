@@ -1,7 +1,7 @@
 import React from 'react';
 
-import SubTitle from '../../components/UI/SubTitle/SubTitle';
 import Aux from '../../hoc/Aux';
+import SubTitle from '../../components/UI/SubTitle/SubTitle';
 
 const faq = () => (
     <Aux>

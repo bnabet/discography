@@ -23,6 +23,9 @@ const routes = [{
 },{
 	component: Add,
 	path: "/ajouter",
+},{
+	component: Add,
+	path: "/editer",
 }];
 
 const App = () => {

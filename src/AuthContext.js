@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
-//import firebase from 'firebase';
-//import 'firebase/auth';
-
 const firebase = require('firebase');
 
 const admins = ['ben.nabet08@gmail.com', 'ben.maker.productions@gmail.com'];

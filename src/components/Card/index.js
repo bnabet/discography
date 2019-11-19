@@ -3,10 +3,10 @@ import { withRouter } from 'react-router-dom';
 
 import firebase from 'firebase';
 import { songsRef } from '../../firebase';
-import { AuthContext } from '../AuthContext';
+import { AuthContext } from '../../AuthContext';
+import { ACTIONS, MODAL } from '../../config';
 import Player from '../Player';
 import SongModal from '../SongModal';
-import { ACTIONS, MODAL } from '../../config';
 
 import './style.css';
 
@@ -14,7 +14,6 @@ const classNames = require('classnames');
 
 class Card extends Component {
     state = {
-        isFav: false,
         modal: {
             show: false,
             mode: '',
@@ -35,23 +34,16 @@ class Card extends Component {
 
     handleFavourite = (event, song, action) => {
         event.preventDefault();
-
         switch (action) {
             case ACTIONS.add:
                 this.props.addToBoard(song);
-                this.handleModal(MODAL.mode.alert, MODAL.message.favAdded);
                 break;
             case ACTIONS.remove:
                 this.props.removeFromBoard(song);
-                this.handleModal(MODAL.mode.alert, MODAL.message.favRemoved);
                 break;
             default:
-                this.closeModal();
+                break;
         }
-
-        setTimeout(() => {
-            this.closeModal();
-        }, 1000);
     }
 
     closeModal = () => {
@@ -60,7 +52,7 @@ class Card extends Component {
 
     editSongHandler = song => {
         this.props.history.push({
-            pathname: '/ajouter',
+            pathname: '/editer',
             songToEdit: song
         });
     }
@@ -86,18 +78,12 @@ class Card extends Component {
     }
 
     getTime = time => {
-        this.setState({
-            playerTime: time
-        });
-    }
-
-    componentDidMount() {
-        this.setState({ isFav: this.props.song.favourite });
+        this.setState({ playerTime: time });
     }
 
 	render() {
         const { song, position } = this.props;
-        const { modal } = this.state;
+        const { modal, playerTime } = this.state;
 
         return (
             <li className={classNames("songs-item", { "songs-item--favourite": song.favourite })}>
@@ -128,7 +114,7 @@ class Card extends Component {
                             <div className="song-tools column-favourite">
                                 <div
                                     className={classNames("tools-button tools-star", { "tools-star--active": song.favourite })}
-                                    onClick={(event) => song.favourite
+                                    onClick={event => song.favourite
                                         ? this.handleFavourite(event, song, ACTIONS.remove)
                                         : this.handleFavourite(event, song, ACTIONS.add)
                                     }
@@ -144,10 +130,10 @@ class Card extends Component {
                             
                             {modal.show &&
                                 <SongModal
-                                    modal={this.state.modal}
+                                    modal={modal}
                                     deleteSong={this.deleteSong}
                                     closeModal={this.closeModal}
-                                    song={this.props.song}
+                                    song={song}
                                 />
                             }
                         </div>
@@ -155,7 +141,7 @@ class Card extends Component {
                 </div>
 
                 <div className="song-progress">
-                    <div className="song-progress-bar" style={{ width: this.state.playerTime + '%' }}></div>
+                    <div className="song-progress-bar" style={{ width: playerTime + '%' }}></div>
                 </div>
             </li>
         );

@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 
 import { usersRef, songsRef } from '../../firebase';
-import { AuthContext } from '../../components/AuthContext';
+import { AuthContext } from '../../AuthContext';
 import Filters from '../../components/Filters';
 import List from '../../components/List';
 import Aux from '../../hoc/Aux';
 import { TABS } from '../../config';
+
 import './style.css';
 
 const classNames = require('classnames');
 
 class Beats extends Component {
     state = {
-        currentTab: 'All',
+        currentTab: 'all',
         currentFilter: 'recent',
         songs: []
     };
@@ -42,7 +43,6 @@ class Beats extends Component {
                         favourite: favourites.indexOf(song.id) > -1,
 						...song.data()
 					};
-
 					tempSongs.push(songObj);
 				});
 
@@ -65,29 +65,31 @@ class Beats extends Component {
         });
     }
 
+    renderTabs = () => {
+        return (
+            TABS.elements.map(tab => (
+                <li
+                    key={tab}
+                    className={classNames("nav-item",
+                        {active: tab === this.state.currentTab},
+                        {highlight: tab === 'favoris'}
+                    )}
+                    onClick={() => this.setTab(tab)}
+                >{tab}</li>
+            ))
+        );
+    }
+
     componentDidMount() {
         this.getSongs(this.context.user.id);
     }
     
     render() {
-        let tabsList = (
-            <ul className="tabs-list">
-                {TABS.elements.map(tab =>
-                    <li
-                        key={tab}
-                        className={classNames("nav-item",
-                            {active: tab === this.state.currentTab},
-                            {highlight: tab === 'Favoris'}
-                        )}
-                        onClick={() => this.setTab(tab)}
-                    >{tab}</li>
-                )}
-            </ul>
-        );
-
         return (
             <Aux>
-                {tabsList}
+                <ul className="tabs-list">
+                    {this.renderTabs()}
+                </ul>
                 <Filters sortSongs={this.sortSongs} />
                 <List
                     user={this.context.user}

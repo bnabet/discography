@@ -2,12 +2,12 @@
     background: #f1f1f1;
     margin-top: 40px;
     border-radius: 2px;
-    border: 2px solid #e6e6e6;
+    border: 1px solid #e6e6e6;
 }
 
 
 .progress-bar {
-    height: 40px;
+    height: 10px;
     position: relative;
     transition: width .4s ease;
 }

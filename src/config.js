@@ -11,6 +11,9 @@ export const PAGES = [{
     path: '/ajouter',
     title: 'Ajouter'
 },{
+    path: '/editer',
+    title: 'Éditer'
+},{
     path: '/:userId/mon-compte',
     title: 'Mon compte'
 }];
@@ -39,11 +42,11 @@ export const SIDEBAR = {
 export const TABS = {
     show: true,
     elements: [
-        'All',
-        'Trap',
-        'Old school',
-        'Others',
-        'Favoris'
+        'all',
+        'trap',
+        'old school',
+        'others',
+        'favoris'
     ]
 };
 
