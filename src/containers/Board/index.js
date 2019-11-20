@@ -5,7 +5,7 @@ import { usersRef, songsRef } from '../../firebase';
 import { AuthContext } from '../../AuthContext';
 import Card from '../../components/Card';
 import SubTitle from '../../components/UI/SubTitle/SubTitle';
-import Aux from '../../hoc/Aux';
+import Wrapper from '../../hoc/Wrapper';
 
 import './style.css';
 
@@ -63,7 +63,7 @@ class Board extends Component {
         }
 
         return (
-            <Aux>
+            <Wrapper>
                 <SubTitle>Informations</SubTitle>
                 <span>Bienvenue <b>{this.context.user.name}</b> !</span>
                 <br />
@@ -86,7 +86,7 @@ class Board extends Component {
                     </li>
                     {favSongs}
                 </ul>
-            </Aux>
+            </Wrapper>
         );
     }
 }

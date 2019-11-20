@@ -1,16 +1,16 @@
 import React from 'react';
 
-import Aux from '../../hoc/Aux';
+import Wrapper from '../../hoc/Wrapper';
 import SubTitle from '../../components/UI/SubTitle/SubTitle';
 
 import './style.css';
 
 const home = () => {
     return (
-        <Aux>
+        <Wrapper>
             <SubTitle>Actualités</SubTitle>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        </Aux>
+        </Wrapper>
     );
 };
 

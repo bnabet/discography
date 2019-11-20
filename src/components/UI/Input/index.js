@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Aux from '../../../hoc/Aux';
+import Wrapper from '../../../hoc/Wrapper';
 
 import './style.css';
 
@@ -48,10 +48,10 @@ const input = props => {
     }
 
     return (
-        <Aux>
+        <Wrapper>
             <label className="form-label">{props.label}</label>
             {inputElement}
-        </Aux>
+        </Wrapper>
     );
 };
 

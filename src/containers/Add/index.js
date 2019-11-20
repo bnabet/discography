@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter, Redirect, NavLink } from "react-router-dom";
 
-import Aux from '../../hoc/Aux';
+import Wrapper from '../../hoc/Wrapper';
 import SongForm from '../../components/SongForm/SongForm';
 import SubTitle from '../../components/UI/SubTitle/SubTitle';
 
@@ -34,7 +34,7 @@ class Add extends Component {
             }
 
             content = (
-                <Aux>
+                <Wrapper>
                     <p>Son ajouté !</p>
                     <div>
                         <NavLink className="btn btn-default" to="/beats">Voir les beats</NavLink>
@@ -43,17 +43,17 @@ class Add extends Component {
                             onClick={() => this.setState({ addedOrUpdated: false })}
                         >Ajouter un autre son</div>
                     </div>
-                </Aux>
+                </Wrapper>
             );
         }
 
 		return (
-            <Aux>
+            <Wrapper>
                 <SubTitle>
                     {songToEdit ? 'Éditer le son' : 'Ajouter un nouveau son'}
                 </SubTitle>
                 {content}
-            </Aux>
+            </Wrapper>
         );
 	}
 }

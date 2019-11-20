@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import firebase from 'firebase';
 import { songsRef } from '../../firebase';
 import * as actionTypes from '../../store/actions';
-import Aux from '../../hoc/Aux';
+import Wrapper from '../../hoc/Wrapper';
 import Input from '../UI/Input';
 
 import './style.css';
@@ -253,7 +253,7 @@ class SongForm extends Component {
 
     render() {
         return (
-            <Aux>
+            <Wrapper>
                 <form
                     className="editor-content"
                     onSubmit={event => this.submitForm(event)}
@@ -293,7 +293,7 @@ class SongForm extends Component {
                         </div>
                     }
                 </form>
-            </Aux>
+            </Wrapper>
         );
     }
 }

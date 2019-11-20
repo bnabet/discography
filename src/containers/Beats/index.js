@@ -4,7 +4,7 @@ import { usersRef, songsRef } from '../../firebase';
 import { AuthContext } from '../../AuthContext';
 import Filters from '../../components/Filters';
 import List from '../../components/List';
-import Aux from '../../hoc/Aux';
+import Wrapper from '../../hoc/Wrapper';
 import { TABS } from '../../config';
 
 import './style.css';
@@ -86,7 +86,7 @@ class Beats extends Component {
     
     render() {
         return (
-            <Aux>
+            <Wrapper>
                 <ul className="tabs-list">
                     {this.renderTabs()}
                 </ul>
@@ -98,7 +98,7 @@ class Beats extends Component {
                     currentFilter={this.state.currentFilter}
                     currentTab={this.state.currentTab}
                 />
-            </Aux>
+            </Wrapper>
         );
     }
 }

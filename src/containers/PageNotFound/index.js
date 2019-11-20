@@ -1,11 +1,11 @@
 import React from 'react';
 
-import Aux from '../../hoc/Aux';
+import Wrapper from '../../hoc/Wrapper';
 
 const pageNotFound = () => (
-    <Aux>
+    <Wrapper>
         <span>PageNotFound</span>
-    </Aux>
+    </Wrapper>
 );
 
 export default pageNotFound;
